@@ -1,6 +1,8 @@
 require "forgery"
 
 class Unikoder
+  UnikoderInvalidCharacterError = StandardError.new
+
   STRING_STEGANOGRAPHY = [
     "\u2000", "\u2001", "\u2002", "\u2003", "\u2004", 
     "\u2005", "\u2006", "\u2007", "\u2008", "\u2009", 
@@ -22,7 +24,7 @@ class Unikoder
   end
   
   def encode_character(character)
-    character.ord.to_s(9).chars.map { |digit|
+    character.ord.to_s(STRING_STEGANOGRAPHY.length - 1).chars.map { |digit|
       STRING_STEGANOGRAPHY[digit.to_i]
     } << STRING_STEGANOGRAPHY.last
   end
@@ -31,5 +33,18 @@ class Unikoder
     string.chars.inject([]) do |encoded_string, character|
       encoded_string << encode_character(character)
     end.flatten
+  end
+  
+  def decode_character(spaces_array)
+    raise UnikoderInvalidCharacterError unless spaces_array.is_a? Array
+    raise UnikoderInvalidCharacterError unless 
+      spaces_array.last == STRING_STEGANOGRAPHY.last
+    
+    # Remove the character separator
+    spaces_array = spaces_array[0..-2]
+    
+    spaces_array.map do |space|
+      STRING_STEGANOGRAPHY.index(space).to_s
+    end.join.to_i.to_s(STRING_STEGANOGRAPHY.length - 1).to_i.chr
   end
 end
