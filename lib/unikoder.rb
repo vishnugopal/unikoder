@@ -1,7 +1,7 @@
 require "forgery"
 
 class Unikoder
-  UnikoderInvalidCharacterError = StandardError.new
+  UnikoderInvalidInput = StandardError.new
 
   STRING_STEGANOGRAPHY = [
     "\u2000", "\u2001", "\u2002", "\u2003", "\u2004", 
@@ -36,15 +36,22 @@ class Unikoder
   end
   
   def decode_character(spaces_array)
-    raise UnikoderInvalidCharacterError unless spaces_array.is_a? Array
-    raise UnikoderInvalidCharacterError unless 
-      spaces_array.last == STRING_STEGANOGRAPHY.last
+    raise UnikoderInvalidInput unless spaces_array.is_a? Array
     
-    # Remove the character separator
-    spaces_array = spaces_array[0..-2]
-    
-    spaces_array.map do |space|
+    character_ordinal = spaces_array.map do |space|
       STRING_STEGANOGRAPHY.index(space).to_s
-    end.join.to_i.to_s(STRING_STEGANOGRAPHY.length - 1).to_i.chr
+    end.join
+    
+    unicode_point = character_ordinal.to_i.
+      to_s(STRING_STEGANOGRAPHY.length - 1).to_i.to_s(16)
+      
+    # Trickery, because string interpolation doesn't work with the unicode \u{codepoint} syntax
+    eval ("\"\\u{" + "#{unicode_point}" + "}\"")
+  end
+  
+  def decode_string(string_array)
+    raise UnikoderInvalidInput unless 
+      string_array.last == STRING_STEGANOGRAPHY.last
+    character_arrays = decode_string.split
   end
 end

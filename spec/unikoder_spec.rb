@@ -32,6 +32,7 @@ interdum in ante vestibulum ante ipsum"
   end
   
   it "decodes a spaces string array into an appropriate character" do
-    @unikoder.decode_character([" ", " ", " "]).must_equal "H"
+    @unikoder.decode_character([" ", " "]).must_equal "H"
+    @unikoder.decode_character([" ", " ", " ", " ", " "]).must_equal "\u2713"
   end
 end
