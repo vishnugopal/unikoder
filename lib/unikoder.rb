@@ -49,9 +49,20 @@ class Unikoder
     eval ("\"\\u{" + "#{unicode_point}" + "}\"")
   end
   
-  def decode_string(string_array)
+  def decode_string(space_array)
     raise UnikoderInvalidInput unless 
-      string_array.last == STRING_STEGANOGRAPHY.last
-    character_arrays = decode_string.split
+      space_array.last == STRING_STEGANOGRAPHY.last
+    
+    character_strings = space_array.join.split(STRING_STEGANOGRAPHY.last)
+    
+    character_arrays = character_strings.map do |character|
+      character.chars
+    end
+    
+    decoded_characters = character_arrays.map do |character_array|
+      decode_character(character_array)
+    end
+    
+    decoded_characters.join
   end
 end

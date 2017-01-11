@@ -35,4 +35,11 @@ interdum in ante vestibulum ante ipsum"
     @unikoder.decode_character([" ", " "]).must_equal "H"
     @unikoder.decode_character([" ", " ", " ", " ", " "]).must_equal "\u2713"
   end
+  
+  it "decodes a spaces string array into a message" do
+    @unikoder.decode_string([" ", " ", " ", " ", " ", " ", " ", 
+      " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", 
+      " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]).
+        must_equal("Hello World")
+  end
 end
