@@ -6,10 +6,6 @@ describe Unikoder do
   before do
     @unikoder = Unikoder.new
   end
-
-  it "has an encode method" do
-    @unikoder.encode("hello")
-  end
   
   it "encodes a single character into its equivalent space representation" do
     @unikoder.encode_character("H").must_equal [" ", " ", " "]
@@ -21,5 +17,17 @@ describe Unikoder do
       " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", 
       " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", 
       " "]
+  end
+  
+  it "encodes messages by replacing spaces with appropriate unicode spaces" do
+    @unikoder.encode("hello").must_equal "lorem ipsum dolor sit amet consectetuer adipiscing \
+elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in"
+    @unikoder.encode("hello world").must_equal "lorem ipsum dolor sit amet consectetuer \
+adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non \
+interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices \
+posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui"
+    @unikoder.encode("Check\u2713").must_equal "lorem ipsum dolor sit amet consectetuer \
+adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non \
+interdum in ante vestibulum ante ipsum primis"
   end
 end
