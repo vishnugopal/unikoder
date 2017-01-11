@@ -5,6 +5,7 @@ require_relative "../lib/unikoder"
 describe Unikoder do
   before do
     @unikoder = Unikoder.new
+    Unikoder.send(:public, *Unikoder.private_instance_methods)
   end
   
   it "encodes a single character into its equivalent space representation" do
@@ -41,5 +42,19 @@ interdum in ante vestibulum ante ipsum"
       " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", 
       " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]).
         must_equal("Hello World")
+  end
+  
+  it "can decode a message from a corpus" do
+    @unikoder.decode("lorem ipsum dolor sit amet consectetuer \
+adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit \
+non interdum in").must_equal("hello")
+    @unikoder.decode("lorem ipsum dolor sit amet consectetuer \
+adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit \
+non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices \
+posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui").
+      must_equal("hello world")
+    @unikoder.decode("lorem ipsum dolor sit amet consectetuer \
+adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non \
+interdum in ante vestibulum ante ipsum").must_equal("Check✓")
   end
 end

@@ -23,6 +23,12 @@ class Unikoder
     encoded_array.join
   end
   
+  def decode(corpus)
+    decode_string(corpus.scan(/#{STRING_STEGANOGRAPHY}/))
+  end
+  
+  private
+  
   def encode_character(character)
     character.ord.to_s(STRING_STEGANOGRAPHY.length - 1).chars.map { |digit|
       STRING_STEGANOGRAPHY[digit.to_i]
