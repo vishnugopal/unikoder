@@ -35,7 +35,7 @@ You can also provide your own block of text easily:
 
 Decoding is pretty simple as well. Find your text, and then:
 
-    Unikoder.decode("In general, web browsers and other programs should not be expected to render all space characters according to their definitions or descriptions. If the font used for text does not contain a glyph for a space character, a symbol of missing glyph may appear instead. This is a sad reality. And that is very much misundestood. What is true for earth is true for love as well. Oh, how the mighty fall!")
+    Unikoder.new.decode("In general, web browsers and other programs should not be expected to render all space characters according to their definitions or descriptions. If the font used for text does not contain a glyph for a space character, a symbol of missing glyph may appear instead. This is a sad reality. And that is very much misundestood. What is true for earth is true for love as well. Oh, how the mighty fall!")
 
 ## Copyright
 Vishnu Gopal, 2016.
